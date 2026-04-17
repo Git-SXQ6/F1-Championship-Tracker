@@ -38,11 +38,8 @@ class Races:#(s)
             results_string = file.read()
         return results_string
         pass
-# # 这一段作为检查用，可以最后删掉
-# if __name__ == '__main__':
-#     my_instance = Races()
-#     task_1 = my_instance.read_results()
-#     print(task_1)
+
+
 
     def read_drivers(self):#(s)
         """
@@ -58,11 +55,7 @@ class Races:#(s)
         return drivers_string
         pass
 
-# #测试内容
-# if __name__ == '__main__':
-#     my_instance = Races()
-#     task_2 = my_instance.read_drivers()
-#     print(task_2)
+
 
     def parse_drivers(self, drivers_string):
         drivers_data = {}
@@ -82,12 +75,7 @@ class Races:#(s)
 
         return drivers_data
     
-# #测试function的内容
-# if __name__ == '__main__':
-#     my_instance = Races()
-#     drivers_string = my_instance.read_drivers()
-#     drivers_data = my_instance.parse_drivers(drivers_string)
-#     print(drivers_data)
+
 
     def parse_results(self, results_string):
         results_data = {}
@@ -117,14 +105,6 @@ class Races:#(s)
 
         return results_data
 
-#检查的内容
-# if __name__ == '__main__':
-#     my_instance = Races()
-#     results_string = my_instance.read_results()
-#     results_data = my_instance.parse_results(results_string)
-#     print(results_data)
-
-
 
     def analyse_laps(self, laps):
         total_time = 0
@@ -153,14 +133,6 @@ class Races:#(s)
             "previous_time": total_time
         }
 
-# 检查analyse laps
-# if __name__ == '__main__':
-#     my_instance = Races()
-#     results_string = my_instance.read_results()
-#     results_data = my_instance.parse_results(results_string)
-#     print(my_instance.analyse_laps(results_data[1][1]))
-#     print(my_instance.analyse_laps(results_data[1][12]))
-#     print(my_instance.analyse_laps(results_data[2][7]))
 
     def position_suffix(self, position):
         if position == 1:
@@ -253,14 +225,6 @@ class Races:#(s)
 
         return f"Results from Race {race_number}: " + ", ".join(output_parts)
 
-# if __name__ == '__main__':
-#     my_instance = Races()
-#     results_string = my_instance.read_results()
-#     drivers_string = my_instance.read_drivers()
-
-#     print(my_instance.individual_race_result(results_string, drivers_string, 1))
-#     print(my_instance.individual_race_result(results_string, drivers_string, 2))
-#     print(my_instance.individual_race_result(results_string, drivers_string, 3))
 
 
     def driver_in_race_result(self, results_string, drivers_string, race_number, driver_number):#(s)
@@ -307,17 +271,6 @@ class Races:#(s)
             return f"Results for Driver {driver_number}, Race {race_number}: {name}, {team}, Retired"
 
 
-# #检查
-# if __name__ == '__main__':
-#     my_instance = Races()
-#     results_string = my_instance.read_results()
-#     drivers_string = my_instance.read_drivers()
-
-#     print(my_instance.driver_in_race_result(results_string, drivers_string, 1, 15))
-#     print(my_instance.driver_in_race_result(results_string, drivers_string, 1, 25))
-#     print(my_instance.driver_in_race_result(results_string, drivers_string, 1, 12))
-#     print(my_instance.driver_in_race_result(results_string, drivers_string, 3, 15))
-#     print(my_instance.driver_in_race_result(results_string, drivers_string, 1, 99))
 
     def average_lap_times(self, results_string, drivers_string, race_number, driver_number):#(s)
         """
@@ -360,15 +313,6 @@ class Races:#(s)
         average = sum(lap_times) / len(lap_times)
         return round(average, 2)
 
-# #检查
-# if __name__ == '__main__':
-#     my_instance = Races()
-#     results_string = my_instance.read_results()
-#     drivers_string = my_instance.read_drivers()
-    
-#     print(my_instance.average_lap_times(results_string, drivers_string, 1, 15))
-#     print(my_instance.average_lap_times(results_string, drivers_string, 2, 7))
-#     print(my_instance.average_lap_times(results_string, drivers_string, 0, 15))
 
 
     def overall_table(self, results_string, drivers_string):#(s)
