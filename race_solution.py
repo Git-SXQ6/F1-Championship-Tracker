@@ -388,108 +388,148 @@ class Races:#(s)
         drivers_data = self.parse_drivers(drivers_string)
         results_data = self.parse_results(results_string)
 
-    points_list = [25, 18, 15, 12, 10, 8, 6, 4, 2, 1]
+        points_list = [25, 18, 15, 12, 10, 8, 6, 4, 2, 1]
 
-    overall_stats = {}
+        overall_stats = {}
 
-    # initialize all drivers
-    for driver_number in drivers_data:
-        overall_stats[driver_number] = {
-            "name": drivers_data[driver_number]["name"],
-            "team": drivers_data[driver_number]["team"],
-            "points": 0,
-            "positions": {}
-        }
+        # initialize all drivers
+        for driver_number in drivers_data:
+            overall_stats[driver_number] = {
+                "name": drivers_data[driver_number]["name"],
+                "team": drivers_data[driver_number]["team"],
+                "points": 0,
+                "positions": {}
+            }
 
-    # process each race
-    for race_number in results_data:
-        race_results = []
+        # process each race
+        for race_number in results_data:
+            race_results = []
 
-        for driver_number in results_data[race_number]:
-            name = drivers_data[driver_number]["name"]
-            laps = results_data[race_number][driver_number]
-            analysis = self.analyse_laps(laps)
+            for driver_number in results_data[race_number]:
+                name = drivers_data[driver_number]["name"]
+                laps = results_data[race_number][driver_number]
+                analysis = self.analyse_laps(laps)
 
-            race_results.append({
-                "driver_number": driver_number,
-                "name": name,
-                "analysis": analysis
-            })
+                race_results.append({
+                    "driver_number": driver_number,
+                    "name": name,
+                    "analysis": analysis
+                })
 
-        finished = []
-        not_finished = []
+            finished = []
+            not_finished = []
 
-        for result in race_results:
-            if result["analysis"]["status"] == "finished":
-                finished.append(result)
-            else:
-                not_finished.append(result)
+            for result in race_results:
+                if result["analysis"]["status"] == "finished":
+                    finished.append(result)
+                else:
+                    not_finished.append(result)
 
-        finished.sort(key=lambda x: x["analysis"]["total_time"])
-        not_finished.sort(
-            key=lambda x: (
-                -x["analysis"]["incident_lap"],
-                x["analysis"]["previous_time"],
-                x["name"]
+            finished.sort(key=lambda x: x["analysis"]["total_time"])
+            not_finished.sort(
+                key=lambda x: (
+                    -x["analysis"]["incident_lap"],
+                    x["analysis"]["previous_time"],
+                    x["name"]
+                )  
             )
-        )
 
-        final_order = finished + not_finished
+            final_order = finished + not_finished
 
-        for i in range(len(final_order)):
-            position = i + 1
-            driver_number = final_order[i]["driver_number"]
-            status = final_order[i]["analysis"]["status"]
+            for i in range(len(final_order)):
+                position = i + 1
+                driver_number = final_order[i]["driver_number"]
+                status = final_order[i]["analysis"]["status"]
 
-            # record finishing position count for tie-break
-            if position not in overall_stats[driver_number]["positions"]:
-                overall_stats[driver_number]["positions"][position] = 0
-            overall_stats[driver_number]["positions"][position] += 1
+                # record finishing position count for tie-break
+                if position not in overall_stats[driver_number]["positions"]:
+                    overall_stats[driver_number]["positions"][position] = 0
+                overall_stats[driver_number]["positions"][position] += 1
 
-            # assign points only if finished and top 10
-            if status == "finished" and i < 10:
-                overall_stats[driver_number]["points"] += points_list[i]
+                # assign points only if finished and top 10
+                if status == "finished" and i < 10:
+                    overall_stats[driver_number]["points"] += points_list[i]
 
-    # sort overall table
-    overall_list = list(overall_stats.values())
+        # sort overall table
+        overall_list = list(overall_stats.values())
 
-    def sort_key(driver):
-        key = [-driver["points"]]
+        def sort_key(driver):
+            key = [-driver["points"]]
 
-        # compare counts of 1st, 2nd, 3rd ... up to last place
-        for pos in range(1, len(drivers_data) + 1):
-            key.append(-driver["positions"].get(pos, 0))
+            # compare counts of 1st, 2nd, 3rd ... up to last place
+            for pos in range(1, len(drivers_data) + 1):
+                key.append(-driver["positions"].get(pos, 0))
 
-        key.append(driver["name"])
-        return tuple(key)
+            key.append(driver["name"])
+            return tuple(key)
 
-    overall_list.sort(key=sort_key)
+        overall_list.sort(key=sort_key)
 
-    output_parts = []
+        output_parts = []
 
-    for i in range(len(overall_list)):
-        position_text = self.position_suffix(i + 1)
-        driver = overall_list[i]
-        output_parts.append(
-            f"{position_text} {driver['name']} {driver['team']} {driver['points']}pts"
-        )
+        for i in range(len(overall_list)):
+            position_text = self.position_suffix(i + 1)
+            driver = overall_list[i]
+            output_parts.append(
+                f"{position_text} {driver['name']} {driver['team']} {driver['points']}pts"
+            )
 
-    return "Overall Results: " + ", ".join(output_parts)
-        pass
+        return "Overall Results: " + ", ".join(output_parts)
+
 
     
 
 if __name__ == '__main__':
-    # You can place any ad-hoc testing here
-    # my_instance = Races()
-    # task_1 = my_instance.read_results()
-    # print(task_1)
+    # Create instance
+    my_instance = Races()
 
-    # task_2 = my_instance.read_drivers()
-    # print(task_2)
+    # Task 1
+    print("----- Task 1: read_results -----")
+    task_1 = my_instance.read_results()
+    print(task_1)
+    print()
 
-    # task_3 = my_instance.read_drivers(task_1, task_2, 1)
-    # print(task_3)
+    # Task 2
+    print("----- Task 2: read_drivers -----")
+    task_2 = my_instance.read_drivers()
+    print(task_2)
+    print()
 
-    pass
+    # Task 3
+    print("----- Task 3: individual_race_result -----")
+    task_3_race_1 = my_instance.individual_race_result(task_1, task_2, 1)
+    print(task_3_race_1)
+    task_3_race_2 = my_instance.individual_race_result(task_1, task_2, 2)
+    print(task_3_race_2)
+    task_3_race_3 = my_instance.individual_race_result(task_1, task_2, 3)
+    print(task_3_race_3)
+    print()
 
+    # Task 4
+    print("----- Task 4: driver_in_race_result -----")
+    task_4_finished = my_instance.driver_in_race_result(task_1, task_2, 1, 15)
+    print(task_4_finished)
+    task_4_crashed = my_instance.driver_in_race_result(task_1, task_2, 1, 25)
+    print(task_4_crashed)
+    task_4_retired = my_instance.driver_in_race_result(task_1, task_2, 1, 12)
+    print(task_4_retired)
+    task_4_no_race = my_instance.driver_in_race_result(task_1, task_2, 3, 15)
+    print(task_4_no_race)
+    task_4_no_driver = my_instance.driver_in_race_result(task_1, task_2, 1, 99)
+    print(task_4_no_driver)
+    print()
+
+    # Task 5
+    print("----- Task 5: average_lap_times -----")
+    task_5_race_1 = my_instance.average_lap_times(task_1, task_2, 1, 15)
+    print(task_5_race_1)
+    task_5_no_average = my_instance.average_lap_times(task_1, task_2, 2, 7)
+    print(task_5_no_average)
+    task_5_all_races = my_instance.average_lap_times(task_1, task_2, 0, 15)
+    print(task_5_all_races)
+    print()
+
+    # Task 6
+    print("----- Task 6: overall_table -----")
+    task_6 = my_instance.overall_table(task_1, task_2)
+    print(task_6)
