@@ -253,14 +253,14 @@ class Races:#(s)
 
         return f"Results from Race {race_number}: " + ", ".join(output_parts)
 
-if __name__ == '__main__':
-    my_instance = Races()
-    results_string = my_instance.read_results()
-    drivers_string = my_instance.read_drivers()
+# if __name__ == '__main__':
+#     my_instance = Races()
+#     results_string = my_instance.read_results()
+#     drivers_string = my_instance.read_drivers()
 
-    print(my_instance.individual_race_result(results_string, drivers_string, 1))
-    print(my_instance.individual_race_result(results_string, drivers_string, 2))
-    print(my_instance.individual_race_result(results_string, drivers_string, 3))
+#     print(my_instance.individual_race_result(results_string, drivers_string, 1))
+#     print(my_instance.individual_race_result(results_string, drivers_string, 2))
+#     print(my_instance.individual_race_result(results_string, drivers_string, 3))
 
 
     def driver_in_race_result(self, results_string, drivers_string, race_number, driver_number):#(s)
@@ -373,7 +373,7 @@ if __name__ == '__main__':
 
     def overall_table(self, results_string, drivers_string):#(s)
         """
-            Task 5:
+            Task 6:
             Output the overall results table for all races.
             This is calculated by adding the points scored for each driver and placing them in order with the largest points total coming first.
         
@@ -385,8 +385,99 @@ if __name__ == '__main__':
                 str: The overall results table.
         """
         # Your code here
+        drivers_data = self.parse_drivers(drivers_string)
+        results_data = self.parse_results(results_string)
 
+    points_list = [25, 18, 15, 12, 10, 8, 6, 4, 2, 1]
+
+    overall_stats = {}
+
+    # initialize all drivers
+    for driver_number in drivers_data:
+        overall_stats[driver_number] = {
+            "name": drivers_data[driver_number]["name"],
+            "team": drivers_data[driver_number]["team"],
+            "points": 0,
+            "positions": {}
+        }
+
+    # process each race
+    for race_number in results_data:
+        race_results = []
+
+        for driver_number in results_data[race_number]:
+            name = drivers_data[driver_number]["name"]
+            laps = results_data[race_number][driver_number]
+            analysis = self.analyse_laps(laps)
+
+            race_results.append({
+                "driver_number": driver_number,
+                "name": name,
+                "analysis": analysis
+            })
+
+        finished = []
+        not_finished = []
+
+        for result in race_results:
+            if result["analysis"]["status"] == "finished":
+                finished.append(result)
+            else:
+                not_finished.append(result)
+
+        finished.sort(key=lambda x: x["analysis"]["total_time"])
+        not_finished.sort(
+            key=lambda x: (
+                -x["analysis"]["incident_lap"],
+                x["analysis"]["previous_time"],
+                x["name"]
+            )
+        )
+
+        final_order = finished + not_finished
+
+        for i in range(len(final_order)):
+            position = i + 1
+            driver_number = final_order[i]["driver_number"]
+            status = final_order[i]["analysis"]["status"]
+
+            # record finishing position count for tie-break
+            if position not in overall_stats[driver_number]["positions"]:
+                overall_stats[driver_number]["positions"][position] = 0
+            overall_stats[driver_number]["positions"][position] += 1
+
+            # assign points only if finished and top 10
+            if status == "finished" and i < 10:
+                overall_stats[driver_number]["points"] += points_list[i]
+
+    # sort overall table
+    overall_list = list(overall_stats.values())
+
+    def sort_key(driver):
+        key = [-driver["points"]]
+
+        # compare counts of 1st, 2nd, 3rd ... up to last place
+        for pos in range(1, len(drivers_data) + 1):
+            key.append(-driver["positions"].get(pos, 0))
+
+        key.append(driver["name"])
+        return tuple(key)
+
+    overall_list.sort(key=sort_key)
+
+    output_parts = []
+
+    for i in range(len(overall_list)):
+        position_text = self.position_suffix(i + 1)
+        driver = overall_list[i]
+        output_parts.append(
+            f"{position_text} {driver['name']} {driver['team']} {driver['points']}pts"
+        )
+
+    return "Overall Results: " + ", ".join(output_parts)
         pass
+
+    
 
 if __name__ == '__main__':
     # You can place any ad-hoc testing here
