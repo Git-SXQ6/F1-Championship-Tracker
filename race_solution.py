@@ -424,56 +424,56 @@ class Races:#(s)
     
 
 if __name__ == '__main__':
-    # Create instance
-    my_instance = Races()
+    # # Create instance
+    # my_instance = Races()
 
-    # Task 1
-    print("----- Task 1: read_results -----")
-    task_1 = my_instance.read_results()
-    print(task_1)
-    print()
+    # # Task 1
+    # print("----- Task 1: read_results -----")
+    # task_1 = my_instance.read_results()
+    # print(task_1)
+    # print()
 
-    # Task 2
-    print("----- Task 2: read_drivers -----")
-    task_2 = my_instance.read_drivers()
-    print(task_2)
-    print()
+    # # Task 2
+    # print("----- Task 2: read_drivers -----")
+    # task_2 = my_instance.read_drivers()
+    # print(task_2)
+    # print()
 
-    # Task 3
-    print("----- Task 3: individual_race_result -----")
-    task_3_race_1 = my_instance.individual_race_result(task_1, task_2, 1)
-    print(task_3_race_1)
-    task_3_race_2 = my_instance.individual_race_result(task_1, task_2, 2)
-    print(task_3_race_2)
-    task_3_race_3 = my_instance.individual_race_result(task_1, task_2, 3)
-    print(task_3_race_3)
-    print()
+    # # Task 3
+    # print("----- Task 3: individual_race_result -----")
+    # task_3_race_1 = my_instance.individual_race_result(task_1, task_2, 1)
+    # print(task_3_race_1)
+    # task_3_race_2 = my_instance.individual_race_result(task_1, task_2, 2)
+    # print(task_3_race_2)
+    # task_3_race_3 = my_instance.individual_race_result(task_1, task_2, 3)
+    # print(task_3_race_3)
+    # print()
 
-    # Task 4
-    print("----- Task 4: driver_in_race_result -----")
-    task_4_finished = my_instance.driver_in_race_result(task_1, task_2, 1, 15)
-    print(task_4_finished)
-    task_4_crashed = my_instance.driver_in_race_result(task_1, task_2, 1, 25)
-    print(task_4_crashed)
-    task_4_retired = my_instance.driver_in_race_result(task_1, task_2, 1, 12)
-    print(task_4_retired)
-    task_4_no_race = my_instance.driver_in_race_result(task_1, task_2, 3, 15)
-    print(task_4_no_race)
-    task_4_no_driver = my_instance.driver_in_race_result(task_1, task_2, 1, 99)
-    print(task_4_no_driver)
-    print()
+    # # Task 4
+    # print("----- Task 4: driver_in_race_result -----")
+    # task_4_finished = my_instance.driver_in_race_result(task_1, task_2, 1, 15)
+    # print(task_4_finished)
+    # task_4_crashed = my_instance.driver_in_race_result(task_1, task_2, 1, 25)
+    # print(task_4_crashed)
+    # task_4_retired = my_instance.driver_in_race_result(task_1, task_2, 1, 12)
+    # print(task_4_retired)
+    # task_4_no_race = my_instance.driver_in_race_result(task_1, task_2, 3, 15)
+    # print(task_4_no_race)
+    # task_4_no_driver = my_instance.driver_in_race_result(task_1, task_2, 1, 99)
+    # print(task_4_no_driver)
+    # print()
 
-    # Task 5
-    print("----- Task 5: average_lap_times -----")
-    task_5_race_1 = my_instance.average_lap_times(task_1, task_2, 1, 15)
-    print(task_5_race_1)
-    task_5_no_average = my_instance.average_lap_times(task_1, task_2, 2, 7)
-    print(task_5_no_average)
-    task_5_all_races = my_instance.average_lap_times(task_1, task_2, 0, 15)
-    print(task_5_all_races)
-    print()
+    # # Task 5
+    # print("----- Task 5: average_lap_times -----")
+    # task_5_race_1 = my_instance.average_lap_times(task_1, task_2, 1, 15)
+    # print(task_5_race_1)
+    # task_5_no_average = my_instance.average_lap_times(task_1, task_2, 2, 7)
+    # print(task_5_no_average)
+    # task_5_all_races = my_instance.average_lap_times(task_1, task_2, 0, 15)
+    # print(task_5_all_races)
+    # print()
 
-    # Task 6
-    print("----- Task 6: overall_table -----")
-    task_6 = my_instance.overall_table(task_1, task_2)
-    print(task_6)
+    # # Task 6
+    # print("----- Task 6: overall_table -----")
+    # task_6 = my_instance.overall_table(task_1, task_2)
+    # print(task_6)
